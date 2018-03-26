@@ -6,14 +6,14 @@ namespace RPSLS
 {
     class Person
     {
-        string name;
+        public string name;
 
-        public Person(string name)
+        public Person()
         {
-            this.name = name;
+            
         }
 
-        public void DisplayName()
+        public virtual void DisplayName()
         {
             Console.WriteLine("Welcome " + name);
         }
