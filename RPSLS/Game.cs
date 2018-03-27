@@ -17,7 +17,7 @@ namespace RPSLS
         public string FindWinner(string player1Gesture, string player2Gesture)
         {
             string result = "";
-            if (player1Gesture == player2Gesture)
+            if (player1Gesture.ToLower() == player2Gesture.ToLower())
             {
                 result = "tie";
             }
@@ -49,16 +49,20 @@ namespace RPSLS
         }
         public void Introduction()
         {
-            Console.WriteLine("Welcome to a game of Rock, Paper, Scissors, Lizard, Spoke!\n" +
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("Welcome to a game of \"Rock, Paper, Scissors, Lizard, Spoke\"!\n" +
                 "\tRock crushes Scissors\n\tScissors cuts Paper\n" +
                 "\tPaper covers Rock\n\tRock crushes Lizard\n" +
                 "\tLizard poisons Spock\n\tSpock smashes Scissors\n" +
                 "\tScissors decapitates Lizard\n\tLizard eats Paper\n" +
                 "\tPaper disproves Spock\n\tSpock vaporizes Rock\n");
+            Console.ForegroundColor = ConsoleColor.White;
        }
         public void GetOpponent()
         {
-            Console.WriteLine("\nWould you like to play the computer?");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine("\n\tWould you like to play the computer?");
+            Console.ForegroundColor = ConsoleColor.Blue;
             switch (Console.ReadLine().ToLower())
             {
                 case "no":
@@ -70,14 +74,16 @@ namespace RPSLS
                     player2.name = "Computer";
                     break;
                 default:
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\nInvalid Response");
+                    Console.ForegroundColor = ConsoleColor.White;
                     GetOpponent();
                     break;
             }
+            Console.ForegroundColor = ConsoleColor.White;
             if (player2.isComputer)
             {
-                Console.WriteLine("\nThe computer wishes you luck!");
-
+                Console.WriteLine("\n\tThe computer wishes you luck!");
             }
         }
         public void GetPlayer()
@@ -96,27 +102,36 @@ namespace RPSLS
             }
             
         }
-        public void PlayGame()
+        public void PlayMatch()
         {
             string winner;
             Console.Clear();
             Introduction();
+            Scoreboard();
             player1.GetGesture();
             Console.Clear();
             Introduction();
+            Scoreboard();
             player2.GetGesture();
             winner = FindWinner(player1.gesture, player2.gesture);
             switch (winner)
             {
                 case "player1":
-                    Console.WriteLine("\nCongradulations {0}, you won the match! \n\nHit Enter to continue game.", player1.name);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("\n\tCongradulations {0}, you won the match!", player1.name);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("\n\n\tHit Enter to continue game.");
                     break;
                 case "player2":
-                    Console.WriteLine("\nYou Lost.:( {0} won the match. \n\nHit Enter to continue game.", player2.name);
-                    break;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\n\tYou Lost.:( {0} won the match.", player2.name);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("\n\n\tHit Enter to continue game."); break;
                 case "tie":
-                    Console.WriteLine("\nTie game. \n\nHit Enter to replay..");
-                    break;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\n\tTie game.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("\n\n\tHit Enter to continue game."); break;
             }
         }
         public bool GameOver()
@@ -126,6 +141,11 @@ namespace RPSLS
                 gameOver = true;
             }
                 return gameOver;
+        }
+        public void Scoreboard()
+        {
+           Console.WriteLine("================ {0}: {1} ================ {2}: {3} ================", player1.name, player1.gamesWon, player2.name, player2.gamesWon);
+
         }
     }
 }
