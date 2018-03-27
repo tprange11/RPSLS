@@ -8,7 +8,6 @@ namespace RPSLS
         static void Main(string[] args)
         {
 
-            Score score = new Score();
             Game game = new Game();
             game.Introduction();
             game.GetPlayer();
@@ -16,11 +15,11 @@ namespace RPSLS
             while (game.GameOver()==false)
             {
                 game.PlayGame();
-                
+                Console.ReadLine();
             }
             
+            Console.WriteLine("{0} WINS!!!!", game.GetWinnerName());
             Console.ReadLine();
-
         }
     }
 }

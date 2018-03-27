@@ -8,16 +8,45 @@ namespace RPSLS
     {
         Player player1 = new Player();
         Player player2 = new Player();
-        Score score = new Score();
-        int player1Score = 0;
-        int player2Score = 0;
         bool gameOver = false;
 
         public Game()
         {
-            
+            gameOver = false;
         }
-
+        public string FindWinner(string player1Gesture, string player2Gesture)
+        {
+            string result = "";
+            if (player1Gesture == player2Gesture)
+            {
+                result = "tie";
+            }
+            else
+            {
+                switch ((player1Gesture + player2Gesture).ToLower())
+                {
+                    case "rockscissors":
+                    case "scissorspaper":
+                    case "paperrock":
+                    case "rocklizard":
+                    case "lizardspock":
+                    case "spockscissors":
+                    case "scissorslizard":
+                    case "lizardpaper":
+                    case "paperspock":
+                    case "spockrock":
+                        result = "player1";
+                        player1.gamesWon += 1;
+                     
+                        break;
+                    default:
+                        result = "player2";
+                        player2.gamesWon += 1;
+                        break;
+                }
+            }
+            return result;
+        }
         public void Introduction()
         {
             Console.WriteLine("Welcome to a game of Rock, Paper, Scissors, Lizard, Spoke!\n" +
@@ -38,6 +67,7 @@ namespace RPSLS
                     break;
                 case "yes":
                     player2.isComputer = true;
+                    player2.name = "Computer";
                     break;
                 default:
                     Console.WriteLine("\nInvalid Response");
@@ -55,32 +85,47 @@ namespace RPSLS
             Console.WriteLine("\nPlayer1:");
             player1.SetName();
         }
+        public string GetWinnerName()
+        {
+            if (player1.gamesWon > 1)
+            {
+                return player1.name;
+            } else
+            {
+                return player2.name;
+            }
+            
+        }
         public void PlayGame()
         {
+            string winner;
             Console.Clear();
             Introduction();
-            Console.WriteLine("\n{0}, What is your gesture?",player1.name);
             player1.GetGesture();
             Console.Clear();
             Introduction();
-            Console.WriteLine("\n{0}, What is your gesture?", player2.name);
             player2.GetGesture();
-            score.FindWinner(player1.GetGesture(), player2.GetGesture());
-
-
+            winner = FindWinner(player1.gesture, player2.gesture);
+            switch (winner)
+            {
+                case "player1":
+                    Console.WriteLine("\nCongradulations {0}, you won the match! \n\nHit Enter to continue game.", player1.name);
+                    break;
+                case "player2":
+                    Console.WriteLine("\nYou Lost.:( {0} won the match. \n\nHit Enter to continue game.", player2.name);
+                    break;
+                case "tie":
+                    Console.WriteLine("\nTie game. \n\nHit Enter to replay..");
+                    break;
+            }
         }
         public bool GameOver()
         {
-            if (player1Score > 1 || player2Score > 1)
+            if (player1.gamesWon > 1 || player2.gamesWon > 1)
             {
                 gameOver = true;
             }
                 return gameOver;
         }
-        //public void makePeople(Person[] people)
-        //{
-        //    Person bill = new Person(1, "Bill", "Bill says, 'I'll only play if you give me a million dollars.'", "Bill says, 'Thanks for the cool mill, now I can pay off my gambling debts! I'll play the game now.'");
-        //    people[1] = bill;
-        //}
     }
 }

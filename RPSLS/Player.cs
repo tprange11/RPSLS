@@ -9,7 +9,7 @@ namespace RPSLS
         public bool isComputer;
         public int gamesWon;
         List<string> gestureList = new List<string>() { "rock", "paper", "scissors", "lizard", "spock" };
-        string gesture;
+        public string gesture;
         
         public Player()
         {
@@ -23,7 +23,7 @@ namespace RPSLS
         }
         public string GetGesture()
         {
-            if (this.isComputer)
+            if (isComputer)
             {
                 Random rnd = new Random();
                 int index = rnd.Next(gestureList.Count);
@@ -38,6 +38,7 @@ namespace RPSLS
                 {
                     GetGesture();
                 }
+                
             }
 
             return gesture;
