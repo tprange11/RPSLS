@@ -6,9 +6,17 @@ namespace RPSLS
 {
     class Game
     {
-        bool isComputer;
         Player player1 = new Player();
         Player player2 = new Player();
+        Score score = new Score();
+        int player1Score = 0;
+        int player2Score = 0;
+        bool gameOver = false;
+
+        public Game()
+        {
+            
+        }
 
         public void Introduction()
         {
@@ -17,51 +25,57 @@ namespace RPSLS
                 "\tPaper covers Rock\n\tRock crushes Lizard\n" +
                 "\tLizard poisons Spock\n\tSpock smashes Scissors\n" +
                 "\tScissors decapitates Lizard\n\tLizard eats Paper\n" +
-                "\tPaper disproves Spock\n\tSpock vaporizes Rock\n" +
-                "\nPlayer1:");
-            player1.SetName();
-            //Console.WriteLine("Your team, {0}, has a game of its life!", player.getTeamName());
-            //Console.WriteLine("You must assemble your team and find your van in order to get to the game on time.");
-        }
+                "\tPaper disproves Spock\n\tSpock vaporizes Rock\n");
+       }
         public void GetOpponent()
         {
             Console.WriteLine("\nWould you like to play the computer?");
             switch (Console.ReadLine().ToLower())
             {
                 case "no":
-                    isComputer = false;
                     Console.WriteLine("\nPlayer2:");
                     player2.SetName();
                     break;
                 case "yes":
-                    isComputer = true;
+                    player2.isComputer = true;
                     break;
                 default:
                     Console.WriteLine("\nInvalid Response");
                     GetOpponent();
                     break;
             }
-            if (isComputer)
+            if (player2.isComputer)
             {
                 Console.WriteLine("\nThe computer wishes you luck!");
 
             }
-
+        }
+        public void GetPlayer()
+        {
+            Console.WriteLine("\nPlayer1:");
+            player1.SetName();
+        }
+        public void PlayGame()
+        {
+            Console.Clear();
+            Introduction();
+            Console.WriteLine("\n{0}, What is your gesture?",player1.name);
+            player1.GetGesture();
+            Console.Clear();
+            Introduction();
+            Console.WriteLine("\n{0}, What is your gesture?", player2.name);
+            player2.GetGesture();
+            score.FindWinner(player1.GetGesture(), player2.GetGesture());
 
 
         }
-        public void GameOver()
+        public bool GameOver()
         {
-            //if (player.GetGameWon())
-            //{
-            //    Console.WriteLine("You win!");
-            //}
-            //else
-            //{
-            //    Console.WriteLine("You lost the game. :( :( :(");
-            //}
-            //Console.WriteLine("Press any key to exit.");
-            //Console.ReadKey();
+            if (player1Score > 1 || player2Score > 1)
+            {
+                gameOver = true;
+            }
+                return gameOver;
         }
         //public void makePeople(Person[] people)
         //{
