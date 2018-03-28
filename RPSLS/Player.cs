@@ -37,15 +37,13 @@ namespace RPSLS
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("\n\t{0}, What is your gesture?", name);
                 Console.ForegroundColor = ConsoleColor.Blue;
-                //gesture = Console.ReadLine();
-                gesture = "";
+               gesture = "";
                 ConsoleKeyInfo key;
 
                 do
                 {
                     key = Console.ReadKey(true);
 
-                    // Backspace Should Not Work
                     if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
                     {
                         gesture += key.KeyChar;
@@ -56,15 +54,13 @@ namespace RPSLS
                         Console.Write("\b");
                     }
                 }
-                // Stops Receving Keys Once Enter is Pressed
                 while (key.Key != ConsoleKey.Enter);
-                //gesture = gesture.Substring(0, (gesture.Length - 1));
                 
                 Console.ForegroundColor = ConsoleColor.White;
                 if (ValidateGesture(gesture) == false)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\n\t\"{1}\" Invalid Gesture.:( \n\n\tUse one of the following.\n\t{0}", String.Join(", ", gestureList.ToArray()), gesture);
+                    Console.WriteLine("\n\tInvalid Gesture.:( \n\n\tUse one of the following:\n\t\t{0}", String.Join(", ", gestureList.ToArray()));
                     Console.ForegroundColor = ConsoleColor.White;
                     GetGesture();
                 }
